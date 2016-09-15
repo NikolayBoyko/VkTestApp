@@ -22,9 +22,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView = (TextView)findViewById(R.id.textView);
+        assert textView !=null;
         textView.setText(LoginActivity.mToken);
        /* GetExample example = new GetExample();
         example.execute();*/
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
 
@@ -46,7 +52,6 @@ class GetExample extends AsyncTask<String, String, String> {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String jsonData = response.body().string();
-
                 }
             });
         } catch (Exception e) {
