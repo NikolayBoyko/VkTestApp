@@ -3,6 +3,7 @@ package com.example.master.vktestapp;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -15,6 +16,7 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    final String SAVED_TEXT = "saved_text";
     TextView textView;
 
     @Override
@@ -22,8 +24,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView = (TextView)findViewById(R.id.textView);
+
+        Log.d("TAG","MainActivity onCreate " + MyWebView.getmToken(SAVED_TEXT,getBaseContext()));
         assert textView !=null;
-        textView.setText(LoginActivity.mToken);
+        textView.setText(MyWebView.getmToken(SAVED_TEXT,getBaseContext()));
        /* GetExample example = new GetExample();
         example.execute();*/
     }

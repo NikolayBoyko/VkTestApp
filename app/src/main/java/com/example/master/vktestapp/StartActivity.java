@@ -1,37 +1,35 @@
 package com.example.master.vktestapp;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.content.Intent;
+import android.util.Log;
 
 public class StartActivity extends Activity {
 
-    private SharedPreferences sPref;
     final String SAVED_TEXT = "saved_text";
+    private String xui;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_activity);
-        LoginActivity.mToken = loadText();
+        xui = MyWebView.getmToken(SAVED_TEXT, getBaseContext());
+        Log.d("TAG", "StartActivity onCreate " + xui);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (LoginActivity.mToken != null && !TextUtils.equals("", LoginActivity.mToken)) {
+                if (xui != null && !TextUtils.equals("", xui)) {
+                    finish();
                     startActivity(new Intent(StartActivity.this, MainActivity.class));
+
                 } else {
+                    finish();
                     startActivity(new Intent(StartActivity.this, LoginActivity.class));
                 }
             }
-        }, 3000);
+        }, 2000);
     }
-
-    String loadText() {
-        sPref = getPreferences(MODE_PRIVATE);
-        return sPref.getString(SAVED_TEXT, "");
-    }
-
 }
