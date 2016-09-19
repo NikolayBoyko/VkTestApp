@@ -1,7 +1,10 @@
 package com.example.master.vktestapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
@@ -16,27 +19,37 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    final String SAVED_TEXT = "saved_text";
-    TextView textView;
+    private TextView textView;
+    private String myToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textView = (TextView)findViewById(R.id.textView);
+        textView = (TextView) findViewById(R.id.textView);
+        myToken = getmToken("KEY", getBaseContext());
 
-        Log.d("TAG","MainActivity onCreate " + MyWebView.getmToken(SAVED_TEXT,getBaseContext()));
-        assert textView !=null;
-        textView.setText(MyWebView.getmToken(SAVED_TEXT,getBaseContext()));
+        Log.d("TAG", "MainActivity onCreate " + myToken);
+        assert textView != null;
+        textView.setText(myToken);
+
+
        /* GetExample example = new GetExample();
         example.execute();*/
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("TAG", "MainActivity onDestroy()");
+    }
+
+    public String getmToken(String key, Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString(key, null);
     }
 }
+
 
 class GetExample extends AsyncTask<String, String, String> {
 
@@ -53,6 +66,7 @@ class GetExample extends AsyncTask<String, String, String> {
                 @Override
                 public void onFailure(Call call, IOException e) {
                 }
+
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String jsonData = response.body().string();
