@@ -12,36 +12,30 @@ import android.util.Log;
 
 public class StartActivity extends Activity {
 
-    private String myToken;
+    private String mToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_activity);
-        myToken = getmToken("KEY", getBaseContext());
-        Log.d("TAG", "StartActivity onCreate " + myToken);
+        mToken = getmToken("KEY", this);
+        Log.d("TAG", "StartActivity onCreate " + mToken);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
-                if (myToken != null && !TextUtils.equals("", myToken)) {
-                    startActivity(new Intent(StartActivity.this, MainActivity.class));
-                    Log.d("TAG", "Start MainActivity ");
+                if (mToken != null && !TextUtils.equals("", mToken)) {
+                    Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                    intent.putExtra("token", mToken);
+                    startActivity(intent);
                     finish();
 
                 } else {
                     startActivity(new Intent(StartActivity.this, LoginActivity.class));
-                    Log.d("TAG", "Start LoginActivity ");
                     finish();
                 }
             }
         }, 2000);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d("TAG", "StartActivity onDestroy()");
     }
 
     public String getmToken(String key, Context context) {

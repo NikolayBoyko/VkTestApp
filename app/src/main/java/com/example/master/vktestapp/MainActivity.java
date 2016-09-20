@@ -1,12 +1,9 @@
 package com.example.master.vktestapp;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -20,36 +17,20 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
     private TextView textView;
-    private String myToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView = (TextView) findViewById(R.id.textView);
-        myToken = getmToken("KEY", getBaseContext());
 
-        Log.d("TAG", "MainActivity onCreate " + myToken);
-        assert textView != null;
-        textView.setText(myToken);
-
+        Intent intent = getIntent();
+        textView.setText(intent.getStringExtra("token"));
 
        /* GetExample example = new GetExample();
         example.execute();*/
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d("TAG", "MainActivity onDestroy()");
-    }
-
-    public String getmToken(String key, Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getString(key, null);
-    }
 }
-
 
 class GetExample extends AsyncTask<String, String, String> {
 
