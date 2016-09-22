@@ -1,38 +1,58 @@
 package com.example.master.vktestapp;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
-
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView textView;
+    private TextView id;
+    private TextView firstName;
+    private TextView lastName;
+    private TextView bDate;
+
+    //private String BASE_URL = "https://api.vk.com/method/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView = (TextView) findViewById(R.id.textView);
+        id = (TextView) findViewById(R.id.id);
+        firstName = (TextView) findViewById(R.id.firstName);
+        lastName = (TextView) findViewById(R.id.secondName);
+        bDate = (TextView) findViewById(R.id.bdate);
 
         Intent intent = getIntent();
         textView.setText(intent.getStringExtra("token"));
+
+
+
+        VkService service = Api.getClient().create(VkService.class);
+        retrofit2.Call<ResponseVk> responseVkCall = service.getUser("210700286", "bdate", "5.53");
+
+        responseVkCall.enqueue(new retrofit2.Callback<ResponseVk>() {
+            @Override
+            public void onResponse(retrofit2.Call<ResponseVk> call, retrofit2.Response<ResponseVk> response) {
+                Log.d("getListUser", "onResponse" + response.body().getListUser().get(0).toString());
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<ResponseVk> call, Throwable t) {
+                Log.d("getListUser", "onFailure");
+            }
+        });
+
 
        /* GetExample example = new GetExample();
         example.execute();*/
     }
 }
 
-class GetExample extends AsyncTask<String, String, String> {
+/*class GetExample extends AsyncTask<String, String, String> {
 
     @Override
     protected String doInBackground(String... params) {
@@ -57,9 +77,9 @@ class GetExample extends AsyncTask<String, String, String> {
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
 
-}
+
 
 
 
