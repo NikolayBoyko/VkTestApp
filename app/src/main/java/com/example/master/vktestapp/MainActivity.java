@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         VkService service = Api.getClient().create(VkService.class);
-        retrofit2.Call<ResponseVk> responseVkCall = service.getUser("210700286", "bdate", "5.53");
+        retrofit2.Call<ResponseVk> responseVkCall = service.getUser();
 
         responseVkCall.enqueue(new retrofit2.Callback<ResponseVk>() {
             @Override
@@ -42,10 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(retrofit2.Call<ResponseVk> call, Throwable t) {
-                Log.d("getListUser", "onFailure");
+                Log.d("getListUser", "onFailure" + t);
             }
         });
-
 
        /* GetExample example = new GetExample();
         example.execute();*/
