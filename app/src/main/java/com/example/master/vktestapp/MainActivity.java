@@ -6,6 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView textView;
@@ -27,17 +31,20 @@ public class MainActivity extends AppCompatActivity {
         bDate = (TextView) findViewById(R.id.bdate);
 
         Intent intent = getIntent();
-        textView.setText(intent.getStringExtra("token"));
-
+        textView.setText("\n" + "TOKEN: "+intent.getStringExtra("token"));
 
 
         VkService service = Api.getClient().create(VkService.class);
-        retrofit2.Call<ResponseVk> responseVkCall = service.getUser();
+        Call<ResponseVk> responseVkCall = service.getUser("133508072", "bdate", "5.53");
 
-        responseVkCall.enqueue(new retrofit2.Callback<ResponseVk>() {
+        responseVkCall.enqueue(new Callback<ResponseVk>() {
             @Override
-            public void onResponse(retrofit2.Call<ResponseVk> call, retrofit2.Response<ResponseVk> response) {
-                Log.d("getListUser", "onResponse" + response.body().getListUser().get(0).toString());
+            public void onResponse(Call<ResponseVk> call, Response<ResponseVk> response) {
+                Log.d("getListUser", "onResponse" + response.body().getListUser().toString());
+                id.setText("\n" + "ID: " + response.body().getListUser().get(0).getId());
+                firstName.setText("\n" + "Name: " + response.body().getListUser().get(0).getFirstName());
+                lastName.setText("\n" + "Second Name: " + response.body().getListUser().get(0).getLastName());
+                bDate.setText("\n" + "birthday: " + response.body().getListUser().get(0).getBdate());
             }
 
             @Override

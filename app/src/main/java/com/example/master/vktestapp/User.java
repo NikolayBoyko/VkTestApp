@@ -40,7 +40,7 @@ public class User {
                 "mId='" + mId + '\'' +
                 ", mFirstName='" + mFirstName + '\'' +
                 ", mLastName='" + mLastName + '\'' +
-                ", mHidden='" + bDate + '\'' +
+                ", bDate='" + bDate + '\'' +
                 '}';
     }
 }
