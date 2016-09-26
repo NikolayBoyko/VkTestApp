@@ -1,4 +1,4 @@
-package com.example.master.vktestapp;
+package com.example.master.vktestapp.Api.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

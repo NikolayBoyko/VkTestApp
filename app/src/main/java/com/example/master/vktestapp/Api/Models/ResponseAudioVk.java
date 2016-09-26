@@ -1,25 +1,32 @@
-package com.example.master.vktestapp;
+package com.example.master.vktestapp.Api.Models;
 
-import com.example.master.vktestapp.Api.Models.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ResponseVk {
+public class ResponseAudioVk {
 
     @JsonProperty("response")
-    List<User> mListUser;
+    List<Audio> mAudioList;
 
-    public List<User> getListUser() {
-        return mListUser;
+    @JsonProperty("count")
+    String mCount;
+
+    public String getCount() {
+        return mCount;
+    }
+
+    public List<Audio> getAudioList() {
+        return mAudioList;
+
     }
 
     @Override
     public String toString() {
         return "ResponseVk{" +
-                "mListUser=" + mListUser +
+                "mListUser=" + mAudioList +
                 '}';
     }
 }

@@ -1,4 +1,4 @@
-package com.example.master.vktestapp;
+package com.example.master.vktestapp.Api;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
