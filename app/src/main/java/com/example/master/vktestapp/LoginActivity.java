@@ -2,12 +2,11 @@ package com.example.master.vktestapp;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -26,7 +25,7 @@ public class LoginActivity extends Activity {
 
     class MyWebView extends WebViewClient {
 
-        private String mToken;
+        private String mToken = null;
         private Context context;
 
         public MyWebView(Context context) {
@@ -36,24 +35,18 @@ public class LoginActivity extends Activity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
-
-            mToken = url.substring(url.indexOf("=") + 1, url.indexOf("&"));
-
-            if (!mToken.equals(Integer.toString(5610917)) || !mToken.equals("grant_access")) {
-
-                Log.d("TAG", "shouldOverrideUrlLoading  заебись" + mToken);
-
+            if (url.contains("access_token")) {
+                mToken = url.substring(url.indexOf("=") + 1, url.indexOf("&"));
                 saveUrl(mToken);
-
+                Log.d("TAG", "shouldOverrideUrlLoading  " + mToken);
                 Intent intent = new Intent(new Intent(context, MainActivity.class));
                 intent.putExtra("token", mToken);
                 startActivity(intent);
                 finish();
-            } else {
-                Log.d("TAG", "shouldOverrideUrlLoading  хуйня " + url);
-
+                return true;
             }
-            return true;
+            Log.d("TAG", "shouldOverrideUrlLoading   false" );
+            return false;
         }
 
         public void saveUrl(String url) {
@@ -64,4 +57,19 @@ public class LoginActivity extends Activity {
     }
 }
 
+/*if (!url.substring(url.indexOf("=") + 1, url.indexOf("&")).equals(Integer.toString(5610917)) || !url.substring(url.indexOf("=") + 1, url.indexOf("&")).equals("grant_access")) {
 
+                mToken = url.substring(url.indexOf("=") + 1, url.indexOf("&"));
+
+                Log.d("TAG", "shouldOverrideUrlLoading  заебись " + mToken);
+
+                saveUrl(mToken);
+
+                Intent intent = new Intent(new Intent(context, MainActivity.class));
+                intent.putExtra("token", mToken);
+                startActivity(intent);
+                finish();
+            } else {
+                Log.d("TAG", "shouldOverrideUrlLoading  хуйня " + url);
+
+            }*/

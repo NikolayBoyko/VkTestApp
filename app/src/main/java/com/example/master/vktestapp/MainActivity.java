@@ -1,17 +1,13 @@
 package com.example.master.vktestapp;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
 import com.example.master.vktestapp.Api.Api;
-import com.example.master.vktestapp.Api.Models.ResponseAudioVk;
 import com.example.master.vktestapp.Api.VkService;
-
-import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseVk> call, Response<ResponseVk> response) {
                 Log.d("TAG", "onResponse" + response.body().getListUser().toString());
-                id.setText("\n" + "ID: " + response.body().getListUser().get(0).getId());
-                firstName.setText("\n" + "Name: " + response.body().getListUser().get(0).getFirstName());
-                lastName.setText("\n" + "Second Name: " + response.body().getListUser().get(0).getLastName());
-                bDate.setText("\n" + "birthday: " + response.body().getListUser().get(0).getBdate());
+                id.setText( "ID: " + response.body().getListUser().get(0).getId());
+                firstName.setText("Name: " + response.body().getListUser().get(0).getFirstName());
+                lastName.setText("Second Name: " + response.body().getListUser().get(0).getLastName());
+                bDate.setText("birthday: " + response.body().getListUser().get(0).getBdate());
             }
 
             @Override
@@ -65,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Call<ResponseAudioVk> responseAudioVkCall = service.getAudio("133508072", "1", mToken, "5.53");
+       /* Call<ResponseAudioVk> responseAudioVkCall = service.getAudio("133508072", "1", mToken, "5.53");
         responseAudioVkCall.enqueue(new Callback<ResponseAudioVk>() {
             @Override
             public void onResponse(Call<ResponseAudioVk> call, Response<ResponseAudioVk> response) {
@@ -77,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<ResponseAudioVk> call, Throwable t) {
                 Log.d("TAG", "onFailure responseAudioVkCall" + t);
             }
-        });
+        });*/
 
         /*GetExample example = new GetExample();
         example.execute();*/
