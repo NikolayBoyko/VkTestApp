@@ -38,14 +38,12 @@ public class LoginActivity extends Activity {
             if (url.contains("access_token")) {
                 mToken = url.substring(url.indexOf("=") + 1, url.indexOf("&"));
                 saveUrl(mToken);
-                Log.d("TAG", "shouldOverrideUrlLoading  " + mToken);
                 Intent intent = new Intent(new Intent(context, MainActivity.class));
                 intent.putExtra("token", mToken);
                 startActivity(intent);
                 finish();
                 return true;
             }
-            Log.d("TAG", "shouldOverrideUrlLoading   false" );
             return false;
         }
 
@@ -56,20 +54,3 @@ public class LoginActivity extends Activity {
         }
     }
 }
-
-/*if (!url.substring(url.indexOf("=") + 1, url.indexOf("&")).equals(Integer.toString(5610917)) || !url.substring(url.indexOf("=") + 1, url.indexOf("&")).equals("grant_access")) {
-
-                mToken = url.substring(url.indexOf("=") + 1, url.indexOf("&"));
-
-                Log.d("TAG", "shouldOverrideUrlLoading  заебись " + mToken);
-
-                saveUrl(mToken);
-
-                Intent intent = new Intent(new Intent(context, MainActivity.class));
-                intent.putExtra("token", mToken);
-                startActivity(intent);
-                finish();
-            } else {
-                Log.d("TAG", "shouldOverrideUrlLoading  хуйня " + url);
-
-            }*/
