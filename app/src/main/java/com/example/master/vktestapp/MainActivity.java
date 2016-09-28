@@ -1,17 +1,16 @@
 package com.example.master.vktestapp;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
 import com.example.master.vktestapp.Api.Api;
-import com.example.master.vktestapp.Api.Models.ResponseAudioVk;
+import com.example.master.vktestapp.Api.ResponseAudio;
+import com.example.master.vktestapp.Api.ResponseAudioVk;
+import com.example.master.vktestapp.Api.ResponseVk;
 import com.example.master.vktestapp.Api.VkService;
-
-import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         VkService service = Api.getClient().create(VkService.class);
-        Call<ResponseVk> responseVkCall = service.getUser("133508072", "bdate", "5.53");
 
+       /* Call<ResponseVk> responseVkCall = service.getUser("133508072", "bdate", "5.53");
         responseVkCall.enqueue(new Callback<ResponseVk>() {
             @Override
             public void onResponse(Call<ResponseVk> call, Response<ResponseVk> response) {
@@ -63,21 +62,22 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(retrofit2.Call<ResponseVk> call, Throwable t) {
                 Log.d("TAG", "onFailure" + t);
             }
-        });
+        });*/
 
-        Call<ResponseAudioVk> responseAudioVkCall = service.getAudio("133508072", "1", mToken, "5.53");
-        responseAudioVkCall.enqueue(new Callback<ResponseAudioVk>() {
+
+        Call<ResponseAudio> responseAudioVkCall = service.getAudio("133508072", "1", mToken, "5.53");
+        responseAudioVkCall.enqueue(new Callback<ResponseAudio>() {
             @Override
-            public void onResponse(Call<ResponseAudioVk> call, Response<ResponseAudioVk> response) {
-                Log.d("TAG", "onResponse responseAudioVkCall " + response.body().getAudioList().get(0).toString());
-                mAudio.setText("\n" +"on/Response responseAudioVkCall " + response.body().getCount());
+            public void onResponse(Call<ResponseAudio> call, Response<ResponseAudio> response) {
+                Log.d("TAG", "onResponse responseAudioVkCall " + response.body().toString());
             }
 
             @Override
-            public void onFailure(Call<ResponseAudioVk> call, Throwable t) {
-                Log.d("TAG", "onFailure responseAudioVkCall" + t);
+            public void onFailure(Call<ResponseAudio> call, Throwable t) {
+                Log.d("TAG", "onFailure responseAudioVkCall " + t);
             }
         });
+
 
         /*GetExample example = new GetExample();
         example.execute();*/

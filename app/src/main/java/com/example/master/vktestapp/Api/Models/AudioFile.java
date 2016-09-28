@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Audio {
+public class AudioFile {
 
     @JsonProperty("id")
     private String mId;
@@ -64,7 +64,7 @@ public class Audio {
 
     @Override
     public String toString() {
-        return "Audio{" +
+        return "AudioFile{" +
                 "mId='" + mId + '\'' +
                 ", mOwner_id='" + mOwner_id + '\'' +
                 ", mArtist='" + mArtist + '\'' +

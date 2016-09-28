@@ -37,23 +37,17 @@ public class LoginActivity extends Activity {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
 
-            mToken = url.substring(url.indexOf("=") + 1, url.indexOf("&"));
-
-            if (!mToken.equals(Integer.toString(5610917)) || !mToken.equals("grant_access")) {
-
-                Log.d("TAG", "shouldOverrideUrlLoading  заебись" + mToken);
-
+            if (url.contains("access_token")) {
+                mToken = url.substring(url.indexOf("=") + 1, url.indexOf("&"));
+                Log.d("TAG", "shouldOverrideUrlLoading token " + mToken );
                 saveUrl(mToken);
-
                 Intent intent = new Intent(new Intent(context, MainActivity.class));
                 intent.putExtra("token", mToken);
                 startActivity(intent);
                 finish();
-            } else {
-                Log.d("TAG", "shouldOverrideUrlLoading  хуйня " + url);
-
+                return true;
             }
-            return true;
+            return false;
         }
 
         public void saveUrl(String url) {
