@@ -1,6 +1,6 @@
 package com.example.master.vktestapp.Api;
 
-import com.example.master.vktestapp.Api.Models.AudioFile;
+import com.example.master.vktestapp.Api.Models.AudioItem;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -10,16 +10,16 @@ import java.util.List;
 public class ResponseAudioVk {
 
     @JsonProperty("count")
-    String mCount;
+    private long mCount;
 
     @JsonProperty("items")
-    List<AudioFile> mAudioFileList;
+    private List<AudioItem> mAudioFileList;
 
-    public String getCount() {
+    public long getCount() {
         return mCount;
     }
 
-    public List<AudioFile> getAudioList() {
+    public List<AudioItem> getAudioList() {
         return mAudioFileList;
 
     }

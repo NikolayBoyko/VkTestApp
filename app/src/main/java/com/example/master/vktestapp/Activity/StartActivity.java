@@ -1,4 +1,4 @@
-package com.example.master.vktestapp;
+package com.example.master.vktestapp.Activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
+
+import com.example.master.vktestapp.R;
 
 public class StartActivity extends Activity {
 
