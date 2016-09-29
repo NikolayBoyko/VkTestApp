@@ -1,88 +1,77 @@
 package com.example.master.vktestapp.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
-import com.example.master.vktestapp.Api.Api;
-import com.example.master.vktestapp.Api.ResponseAudio;
-import com.example.master.vktestapp.Api.ResponseVk;
-import com.example.master.vktestapp.Api.VkService;
 import com.example.master.vktestapp.R;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
-    VkService service = Api.getClient().create(VkService.class);
+    public Toolbar mToolbar;
+    private String TOKEN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    public void onContentChanged() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle(R.string.app_name);
+        setSupportActionBar(mToolbar);
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
+        Intent intent = getIntent();
+        TOKEN = intent.getStringExtra("token");
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this,
+                mDrawerLayout,
+                mToolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close
+        );
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        super.onContentChanged();
     }
 
-    public void getUser() {
-        Call<ResponseVk> responseVkCall = service.getUser("133508072", "bdate", "5.53");
-        responseVkCall.enqueue(new Callback<ResponseVk>() {
-            @Override
-            public void onResponse(Call<ResponseVk> call, Response<ResponseVk> response) {
-                Log.d("TAG", "onResponse" + response.body().getListUser().toString());
-            }
-
-            @Override
-            public void onFailure(retrofit2.Call<ResponseVk> call, Throwable t) {
-                Log.d("TAG", "onFailure" + t);
-            }
-        });
-    }
-
-    public void getAudio() {
-        Call<ResponseAudio> responseAudioVkCall = service.getAudio("133508072", "3", " ТОКЕН  ", "5.53");
-        responseAudioVkCall.enqueue(new Callback<ResponseAudio>() {
-            @Override
-            public void onResponse(Call<ResponseAudio> call, Response<ResponseAudio> response) {
-                Log.d("TAG", "onResponse responseAudioVkCall " + response.body().getResponse().getAudioList().get(0).getArtist());
-            }
-
-            @Override
-            public void onFailure(Call<ResponseAudio> call, Throwable t) {
-                Log.d("TAG", "onFailure responseAudioVkCall " + t);
-            }
-        });
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.user:
+                // replaceFragment(UserFragment.newInstance(1));
                 Toast.makeText(this, "Click on Android", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.audioList:
+                // replaceFragment(AudioFragment.newInstance(2));
                 Toast.makeText(this, "Click on Java", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.settings:
-                Toast.makeText(this, "Click on Settings", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.about:
-                Toast.makeText(this, "Click on About", Toast.LENGTH_SHORT).show();
                 break;
         }
 
